@@ -2,26 +2,26 @@
   {
     "name": "sentence-transformers/all-MiniLM-L6-v2",
     "downloads": 149792991,
-    "last_updated": "2026-01-29 13:49:12"
+    "last_updated": "2026-01-29 13:52:39"
   },
   {
     "name": "Falconsai/nsfw_image_detection",
     "downloads": 66815675,
-    "last_updated": "2026-01-29 13:49:12"
+    "last_updated": "2026-01-29 13:52:39"
   },
   {
     "name": "google/electra-base-discriminator",
     "downloads": 51502422,
-    "last_updated": "2026-01-29 13:49:12"
+    "last_updated": "2026-01-29 13:52:39"
   },
   {
     "name": "dima806/fairface_age_image_detection",
     "downloads": 42369372,
-    "last_updated": "2026-01-29 13:49:12"
+    "last_updated": "2026-01-29 13:52:39"
   },
   {
     "name": "google-bert/bert-base-uncased",
     "downloads": 40453266,
-    "last_updated": "2026-01-29 13:49:12"
+    "last_updated": "2026-01-29 13:52:39"
   }
 ]

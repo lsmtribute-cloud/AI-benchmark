@@ -1,23 +1,25 @@
 import requests
 import json
-import os
+from datetime import datetime
+import pytz # 한국 시간을 위해 필요
 
 def get_benchmarks():
-    # 실제로는 특정 API나 크롤링 대상 URL을 넣습니다.
-    # 여기서는 예시로 Hugging Face의 인기 모델 데이터를 가져오는 구조입니다.
     url = "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=5"
     response = requests.get(url)
     models = response.json()
+
+    # 한국 시간 기준 현재 시각 생성
+    korea_tz = pytz.timezone('Asia/Seoul')
+    now = datetime.now(korea_tz).strftime('%Y-%m-%d %H:%M:%S')
 
     data = []
     for m in models:
         data.append({
             "name": m['id'],
             "downloads": m.get('downloads', 0),
-            "last_updated": m.get('lastModified', '')
+            "last_updated": now # 모든 항목에 현재 수집 시간 기록
         })
     
-    # 결과를 data.json 파일로 저장
     with open('data.json', 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 

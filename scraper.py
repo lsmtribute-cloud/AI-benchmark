@@ -1,27 +1,25 @@
-name: Daily AI Data Scrape
+import requests
+import json
+import os
 
-on:
-  schedule:
-    - cron: '0 0 * * *' # 매일 한국 시간 오전 9시 실행
-  workflow_dispatch:   # 수동으로도 실행 가능하게 설정
+def get_benchmarks():
+    # 실제로는 특정 API나 크롤링 대상 URL을 넣습니다.
+    # 여기서는 예시로 Hugging Face의 인기 모델 데이터를 가져오는 구조입니다.
+    url = "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=5"
+    response = requests.get(url)
+    models = response.json()
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.9'
-      - name: Install dependencies
-        run: pip install requests
-      - name: Run Scraper
-        run: python scraper.py
-      - name: Commit and Push
-        run: |
-          git config --global user.name "Auto-Scraper"
-          git config --global user.email "actions@github.com"
-          git add data.json
-          git commit -m "Update benchmark data" || exit 0
-          git push
+    data = []
+    for m in models:
+        data.append({
+            "name": m['id'],
+            "downloads": m.get('downloads', 0),
+            "last_updated": m.get('lastModified', '')
+        })
+    
+    # 결과를 data.json 파일로 저장
+    with open('data.json', 'w', encoding='utf-8') as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
+
+if __name__ == "__main__":
+    get_benchmarks()
